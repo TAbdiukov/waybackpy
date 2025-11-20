@@ -9,6 +9,7 @@ crawled document. And these lines are casted to CDXSnapshot.
 
 from datetime import datetime
 from typing import Dict
+from .utils import parse_wayback_datetime
 
 
 class CDXSnapshot:
@@ -61,9 +62,7 @@ class CDXSnapshot:
     def __init__(self, properties: Dict[str, str]) -> None:
         self.urlkey: str = properties["urlkey"]
         self.timestamp: str = properties["timestamp"]
-        self.datetime_timestamp: datetime = datetime.strptime(
-            self.timestamp, "%Y%m%d%H%M%S"
-        )
+        self.datetime_timestamp: datetime = parse_wayback_datetime(self.timestamp)
         self.original: str = properties["original"]
         self.mimetype: str = properties["mimetype"]
         self.statuscode: str = properties["statuscode"]

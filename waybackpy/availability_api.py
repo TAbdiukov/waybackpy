@@ -36,6 +36,7 @@ from .utils import (
     DEFAULT_USER_AGENT,
     unix_timestamp_to_wayback_timestamp,
     wayback_timestamp,
+    parse_wayback_datetime,
 )
 
 ResponseJSON = Dict[str, Any]
@@ -139,9 +140,8 @@ class WaybackMachineAvailabilityAPI:
             and self.json["archived_snapshots"]["closest"] is not None
             and "timestamp" in self.json["archived_snapshots"]["closest"]
         ):
-            return datetime.strptime(
-                self.json["archived_snapshots"]["closest"]["timestamp"], "%Y%m%d%H%M%S"
-            )
+            ts = self.json["archived_snapshots"]["closest"]["timestamp"]
+            return parse_wayback_datetime(ts)
 
         raise ValueError("Timestamp not found in the Availability API's JSON response.")
 

@@ -17,7 +17,7 @@ from requests.structures import CaseInsensitiveDict
 from urllib3.util.retry import Retry
 
 from .exceptions import MaximumSaveRetriesExceeded, TooManyRequestsError, WaybackError
-from .utils import DEFAULT_USER_AGENT
+from .utils import DEFAULT_USER_AGENT, parse_wayback_datetime
 
 
 class WaybackMachineSaveAPI:
@@ -181,7 +181,7 @@ class WaybackMachineSaveAPI:
             )
 
         string_timestamp = match.group(1)
-        timestamp = datetime.strptime(string_timestamp, "%Y%m%d%H%M%S")
+        timestamp = parse_wayback_datetime(string_timestamp)
         timestamp_unixtime = time.mktime(timestamp.timetuple())
         instance_birth_time_unixtime = time.mktime(self.instance_birth_time.timetuple())
 
