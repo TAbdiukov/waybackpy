@@ -221,3 +221,26 @@ def test_archive_url() -> None:
     )
     save_api._archive_url = save_api.saved_archive
     assert save_api.archive_url == save_api.saved_archive
+
+def test_timestamp_with_non_standard_wayback_timestamp() -> None:
+    """
+    WaybackMachineSaveAPI.timestamp should use parse_wayback_datetime and
+    correctly normalize timestamps with '00' day etc.
+    """
+    url = "https://example.com"
+    user_agent = (
+        "Mozilla/5.0 (MacBook Air; M1 Mac OS X 11_4) AppleWebKit/605.1.15 "
+        "(KHTML, like Gecko) Version/14.1.1 Safari/604.1"
+    )
+    save_api = WaybackMachineSaveAPI(url, user_agent)
+
+    ts = "20000900190155"  # 2000‑09‑01 19:01:55 after normalization
+    save_api._archive_url = f"https://web.archive.org/web/{ts}/{url}/"
+
+    # Ensure the instance birth time is after the archive timestamp so that
+    # cached_save becomes True deterministically.
+    save_api.instance_birth_time = datetime(2001, 1, 1, 0, 0, 0)
+
+    parsed = save_api.timestamp()
+    assert parsed == datetime(2000, 9, 1, 19, 1, 55)
+    assert save_api.cached_save is True

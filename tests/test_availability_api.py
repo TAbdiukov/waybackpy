@@ -111,3 +111,27 @@ def test_no_call_timestamp() -> None:
         url=f"https://{rndstr(30)}.in", user_agent=user_agent
     )
     assert datetime.max == availability_api.timestamp()
+
+def test_availability_timestamp_uses_robust_parser() -> None:
+    """
+    WaybackMachineAvailabilityAPI.timestamp should correctly handle timestamps
+    that require normalization via parse_wayback_datetime (e.g. day '00').
+    """
+    availability_api = WaybackMachineAvailabilityAPI(
+        url="https://example.com/", user_agent=user_agent
+    )
+
+    ts_str = "20000900190155"  # 2000‑09‑01 19:01:55 after normalization
+    availability_api.json = {
+        "archived_snapshots": {
+            "closest": {
+                "available": True,
+                "timestamp": ts_str,
+                "url": (
+                    "https://web.archive.org/web/20000900190155/"
+                    "https://example.com/"
+                ),
+            }
+        }
+    }
+    assert availability_api.timestamp() == datetime(2000, 9, 1, 19, 1, 55)
