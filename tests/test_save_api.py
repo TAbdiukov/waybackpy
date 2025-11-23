@@ -222,6 +222,7 @@ def test_archive_url() -> None:
     save_api._archive_url = save_api.saved_archive
     assert save_api.archive_url == save_api.saved_archive
 
+
 def test_timestamp_with_non_standard_wayback_timestamp() -> None:
     """
     WaybackMachineSaveAPI.timestamp should use parse_wayback_datetime and

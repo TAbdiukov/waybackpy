@@ -44,6 +44,7 @@ def test_CDXSnapshot() -> None:
     assert sample_input == str(snapshot)
     assert sample_input == repr(snapshot)
 
+
 def test_CDXSnapshot_with_non_standard_timestamp() -> None:
     """
     CDXSnapshot should use parse_wayback_datetime and cope with timestamps

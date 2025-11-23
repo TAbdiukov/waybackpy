@@ -112,6 +112,7 @@ def test_no_call_timestamp() -> None:
     )
     assert datetime.max == availability_api.timestamp()
 
+
 def test_availability_timestamp_uses_robust_parser() -> None:
     """
     WaybackMachineAvailabilityAPI.timestamp should correctly handle timestamps
@@ -128,8 +129,7 @@ def test_availability_timestamp_uses_robust_parser() -> None:
                 "available": True,
                 "timestamp": ts_str,
                 "url": (
-                    "https://web.archive.org/web/20000900190155/"
-                    "https://example.com/"
+                    "https://web.archive.org/web/20000900190155/" "https://example.com/"
                 ),
             }
         }

@@ -12,6 +12,7 @@ def test_default_user_agent() -> None:
         == f"waybackpy {__version__} - https://github.com/akamhy/waybackpy"
     )
 
+
 def test_parse_wayback_datetime_14_digits() -> None:
     """Standard 14‑digit Wayback timestamp parses as‑is."""
     ts = "20220102130405"
@@ -70,7 +71,6 @@ def test_parse_wayback_datetime_clamps_time_components() -> None:
         "123456789012345",  # 15 digits
     ],
 )
-
 def test_parse_wayback_datetime_invalid_input_raises(ts: str) -> None:
     """Non‑conforming strings should raise ValueError."""
     with pytest.raises(ValueError):

@@ -6,7 +6,6 @@ The CDX index format is plain text data. Each line ('record') indicates a
 crawled document. And these lines are casted to CDXSnapshot.
 """
 
-
 from datetime import datetime
 from typing import Dict
 from .utils import parse_wayback_datetime

@@ -30,6 +30,7 @@ def wayback_timestamp(**kwargs: int) -> str:
         str(kwargs[key]).zfill(2) for key in ["year", "month", "day", "hour", "minute"]
     )
 
+
 def parse_wayback_datetime(ts: str) -> datetime:
     """
     Parse a Wayback timestamp robustly.
