@@ -8,7 +8,6 @@ WaybackMachineCDXServerAPI has a snapshot method that yields the snapshots, and
 the snapshots are yielded as instances of the CDXSnapshot class.
 """
 
-
 import time
 from datetime import datetime
 from typing import Dict, Generator, List, Optional, Union, cast
